@@ -10,7 +10,6 @@ try:
         cfg = yaml.safe_load(ymlfile)
 except Exception as e:
     print("Keys file not found")
-    sys.exit(1)
 key = cfg.get('gemini')
 
 genai.configure(api_key=key)
