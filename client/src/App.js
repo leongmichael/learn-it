@@ -2,8 +2,6 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import About from "./pages/About.js";
-import FAQ from "./pages/FAQ.js";
 import Home from "./pages/Home.js";
 import NotFound from "./pages/NotFound.js";
 import AppBar from "./components/SiteAppBar.js";
@@ -44,8 +42,6 @@ export default function App() {
         <Suspense>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/about" element={<About />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </Suspense>

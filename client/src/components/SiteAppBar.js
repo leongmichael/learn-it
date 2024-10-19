@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "./images/5_BL_Horiz_Tile_rgb.svg";
 
 const drawerWidth = 240;
-const navItems = ["FAQ", "About"];
+const navItems = [];
 
 export default function SiteAppBar(props) {
   const { window } = props;
@@ -85,7 +85,7 @@ export default function SiteAppBar(props) {
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           ></Typography>
 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button sx={{ color: "primary" }} onClick={() => navigate(`/faq`)}>
               FAQ
             </Button>
@@ -95,7 +95,7 @@ export default function SiteAppBar(props) {
             >
               About
             </Button>
-          </Box>
+          </Box> */}
         </Toolbar>
       </AppBar>
       <Toolbar />
