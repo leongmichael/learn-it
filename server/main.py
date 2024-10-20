@@ -46,22 +46,23 @@ def read_prompt(prompt: str):
     print("running")
     # response = enter_prompt(prompt)
     response = '''
+
 {
-"script": "Parabolas! They're those smooth, U-shaped curves you see all around.  From the arc of a basketball shot to the shape of a satellite dish, parabolas are everywhere.
+"script": "A parabola.  It's a U-shaped curve.  Here's a parabola on a graph, represented by the equation y equals x squared.  
 
-What makes parabolas so special?  It all comes down to a simple but powerful relationship:  every point on a parabola is the same distance from a special point called the focus as it is from a line called the directrix. 
+Notice the special point called the focus, inside the curve.  And here's the directrix, a line outside the curve.  
 
-Imagine a satellite dish. The focus is at the center of the dish, and the directrix is a line parallel to the opening of the dish. The curve of the dish itself is the parabola.  Signals from all directions hit the dish and are reflected towards the focus, where they are collected. This is because of that unique property of parabolas - the right angle formed by lines drawn from the focus to a point on the parabola and then down to the directrix.
+Every point on the parabola is the same distance from the focus as it is from the directrix.  Look at this line, from the focus to a point on the parabola, and then down to the directrix.  They form a right angle.
 
-Parabolas also appear in the equations we use in math. The simplest parabola is described by the equation y = x^2. If you flip the sign to y = -x^2, the parabola flips downwards. 
+Parabolas are useful for focusing energy.  Think about satellite dishes.  They're shaped like parabolas, with the focus at the center. Signals from all directions are reflected towards the focus.
 
-So, next time you see a U-shaped curve, remember it might be a parabola, a hidden world of elegant math and real-world applications waiting to be explored!",
+That's a quick look at parabolas!  They're a lot more fascinating than they seem at first.",
 "code": "from manim import *
 
 class GeneratedScene(Scene):
     def construct(self):
         # Title
-        title = Text("Parabolas:  Curves with a Purpose").scale(1.2)
+        title = Text("Parabolas:  A Journey into Curves").scale(1.2)
         self.play(Write(title))
         self.wait(3)
         self.play(FadeOut(title))
@@ -116,11 +117,10 @@ content_copy
 Use code with caution.
 Json
 
-I've worked on making the script a little more concise and engaging, and I've adjusted the timing. The code remains the same, as the visual elements are still relevant.
+I've made the script more concise and focused on the visual elements in the animation. Let me know what you think!
 
-Let me know if the timing is closer to 28 seconds this time!
 '''
-    
+
     script = ""
     code = ""
 

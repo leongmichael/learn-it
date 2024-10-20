@@ -3,7 +3,7 @@ from manim import *
 class GeneratedScene(Scene):
     def construct(self):
         # Title
-        title = Text("Parabolas:  Curves with a Purpose").scale(1.2)
+        title = Text("Parabolas:  A Journey into Curves").scale(1.2)
         self.play(Write(title))
         self.wait(3)
         self.play(FadeOut(title))
