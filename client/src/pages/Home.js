@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { ArrowUp } from "lucide-react";
 import VideoPlayer from "../components/VideoPlayer.js";
-import videoSource from '../components/videos/output_video.mp4';
+import videoSource from "../components/videos/output_video.mp4";
 
 export default function Home() {
   let navigate = useNavigate();
@@ -37,7 +37,10 @@ export default function Home() {
       const data = await response.json();
       console.log(data);
     } catch (error) {
-      console.error("There has been a problem with your fetch operation:", error);
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     }
   };
 
@@ -54,7 +57,6 @@ export default function Home() {
         gap: "2rem",
       }}
     >
-      {/* Header Section */}
       <Box
         sx={{
           textAlign: "center",
@@ -92,7 +94,6 @@ export default function Home() {
           Learn through generative AI video content.
         </Typography>
 
-        {/* Search Input Section */}
         <Box
           sx={{
             display: "flex",
@@ -137,14 +138,14 @@ export default function Home() {
         </Box>
       </Box>
 
-      {/* Video Player Section */}
       <Box
         sx={{
           width: "100%",
           maxWidth: "800px",
           borderRadius: "16px",
           overflow: "hidden",
-          boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+          boxShadow:
+            "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
           backgroundColor: "#000",
           margin: "0 auto",
         }}

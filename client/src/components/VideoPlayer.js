@@ -1,12 +1,13 @@
-import React, { useState, useRef } from 'react';
-import { 
-  Play, 
-  Pause, 
-  Volume2, 
+import React, { useState, useRef } from "react";
+import {
+  Play,
+  Pause,
+  Volume2,
   VolumeX,
-  Maximize, 
-  Minimize 
-} from 'lucide-react';
+  Maximize,
+  Minimize,
+} from "lucide-react";
+import { Box, IconButton, Slider, Typography } from "@mui/material";
 
 const VideoPlayer = ({ videoSrc }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -14,7 +15,7 @@ const VideoPlayer = ({ videoSrc }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  
+
   const videoRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -58,75 +59,75 @@ const VideoPlayer = ({ videoSrc }) => {
     }
   };
 
-  const handleSeek = (e) => {
-    const time = e.target.value;
+  const handleSeek = (e, newValue) => {
     if (videoRef.current) {
-      videoRef.current.currentTime = time;
-      setCurrentTime(time);
+      videoRef.current.currentTime = newValue;
+      setCurrentTime(newValue);
     }
   };
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
-    <div className="relative flex flex-col w-full h-full" ref={containerRef}>
+    <Box
+      ref={containerRef}
+      sx={{ position: "relative", width: "100%", height: "100%" }}
+    >
       <video
         ref={videoRef}
-        className="w-full h-full object-contain"
         src={videoSrc}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
+        style={{ width: "100%", height: "100%", objectFit: "contain" }}
       />
-      
-      <div className="absolute bottom-0 left-0 right-0 z-10">
-        <div className="bg-black/50 p-4">
-          <input
-            type="range"
-            min="0"
-            max={duration}
-            value={currentTime}
-            onChange={handleSeek}
-            className="w-full h-1 mb-4 accent-blue-500 cursor-pointer"
-          />
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={togglePlay} 
-                className="text-white hover:text-gray-300 focus:outline-none"
-                type="button"
-              >
-                {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-              </button>
-              
-              <button 
-                onClick={toggleMute} 
-                className="text-white hover:text-gray-300 focus:outline-none"
-                type="button"
-              >
-                {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-              </button>
-              
-              <span className="text-white text-sm">
-                {formatTime(currentTime)} / {formatTime(duration)}
-              </span>
-            </div>
-            
-            <button 
-              onClick={toggleFullscreen} 
-              className="text-white hover:text-gray-300 focus:outline-none"
-              type="button"
-            >
-              {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: "rgba(0, 0, 0, 0.5)",
+          padding: "8px 16px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+        }}
+      >
+        <Slider
+          min={0}
+          max={duration}
+          value={currentTime}
+          onChange={handleSeek}
+          sx={{ color: "#7235FF" }}
+        />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <IconButton onClick={togglePlay} sx={{ color: "#7235FF" }}>
+              {isPlaying ? <Pause /> : <Play />}
+            </IconButton>
+            <IconButton onClick={toggleMute} sx={{ color: "#7235FF" }}>
+              {isMuted ? <VolumeX /> : <Volume2 />}
+            </IconButton>
+            <Typography variant="body2" sx={{ color: "#7235FF" }}>
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </Typography>
+          </Box>
+          <IconButton onClick={toggleFullscreen} sx={{ color: "#7235FF" }}>
+            {isFullscreen ? <Minimize /> : <Maximize />}
+          </IconButton>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
