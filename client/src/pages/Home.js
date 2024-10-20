@@ -77,7 +77,7 @@ export default function Home() {
       >
         <TextField
           fullWidth
-          placeholder="What do you want to learn more about?"
+          placeholder="What do you want to learn about?"
           variant="outlined"
           sx={{
             "& .MuiOutlinedInput-root": {
