@@ -5,10 +5,6 @@ import tempfile
 import os
 
 
-# Load audio file
-
-
-
 def speed_up_audio():
     audio = AudioSegment.from_file("output.wav")
     video = VideoFileClip("./media/videos/videogen/480p15/GeneratedScene.mp4")
@@ -43,7 +39,7 @@ def output_video(audio):
             print("Writing video file...")
             final_video.write_videofile(temp_video.name, codec="libx264", audio_codec="aac", threads=2, fps=30)
 
-            # Copy temporary file to final output
+            # copy temporary file to final output
             import shutil
             shutil.copy(temp_video.name, "../client/src/components/videos/output_video.mp4")
         print("Video file written successfully.")
