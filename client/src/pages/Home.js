@@ -13,7 +13,6 @@ import React, { useState, useEffect, useRef } from "react";
 export default function Home() {
   let navigate = useNavigate(); // Navigate to different pages
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check if the device is mobile
 
   return (
     <Box
@@ -44,7 +43,7 @@ export default function Home() {
           sx={{
             fontSize: { xs: "56px", sm: "72px" },
             fontWeight: 700,
-            color: "#4267B2",
+            color: "#7235FF",
             mb: 1,
             letterSpacing: "-0.02em",
             width: "100%",
@@ -94,12 +93,12 @@ export default function Home() {
         />
         <IconButton
           sx={{
-            backgroundColor: "#4267B2",
+            backgroundColor: "#7235FF",
             borderRadius: "50%",
             width: "56px",
             height: "56px",
             "&:hover": {
-              backgroundColor: "#365899",
+              backgroundColor: "#5225BC",
             },
           }}
         >
