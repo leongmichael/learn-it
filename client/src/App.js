@@ -13,31 +13,13 @@ const theme = createTheme({
       fontSize: "medium",
     },
   },
-  palette: {
-    primary: {
-      main: "#00303C", // dark teal
-    },
-    secondary: {
-      main: "#007681", // teal
-    },
-    tertiary: {
-      main: "#BED7DD", // light blue
-    },
-    white: {
-      main: "#FFFFFF", // white
-    },
-    lightgray: {
-      main: "#b1b3b3", // light gray
-    },
-  },
-  mode: "dark",
+
 });
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        {/* <AppBar /> */}
         <Suspense>
           <Routes>
             <Route path="/" element={<Home />} />
