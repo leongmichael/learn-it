@@ -7,7 +7,7 @@ Learn through generative AI video content. \
 - [Install](https://nodejs.org/en/download) Node.js 18 or higher
 - [Install](https://www.python.org/downloads/release/python-3110/) Python 3.11 or higher
 
-In the `server` directory, you need the following yaml configuration file keys.yaml” to save the Google Gemini and Deepgram API keys:
+In the `server` directory, you need the following yaml configuration file ```keys.yaml``` to save the Google Gemini and Deepgram API keys:
 
 ```
 gemini: "KEY"
