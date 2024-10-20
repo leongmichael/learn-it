@@ -2,17 +2,21 @@ from pydub import AudioSegment
 from pydub.playback import play
 from moviepy.editor import VideoFileClip, AudioFileClip
 import tempfile
+import os
 
 
 # Load audio file
-audio = AudioSegment.from_file("output.wav")
-audio_duration = len(audio) // 1000 # seconds
 
-video = VideoFileClip("./media/videos/videogen/480p15/GeneratedScene.mp4")
-video_duration = int(video.duration) # seconds
 
 
 def speed_up_audio():
+    audio = AudioSegment.from_file("output.wav")
+    video = VideoFileClip("./media/videos/videogen/480p15/GeneratedScene.mp4")
+    
+    audio_duration = len(audio) // 1000 # seconds
+    video_duration = int(video.duration) # seconds
+
+
     if audio_duration > video_duration:
         factor = (audio_duration / video_duration)
         faster_audio = audio.speedup(playback_speed=factor)
@@ -21,6 +25,7 @@ def speed_up_audio():
     return "normal"
 
 def output_video(audio):
+    video = VideoFileClip("./media/videos/videogen/480p15/GeneratedScene.mp4")
     try:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_video:
             print("Loading audio...")
@@ -40,8 +45,14 @@ def output_video(audio):
 
             # Copy temporary file to final output
             import shutil
-            shutil.copy(temp_video.name, "output_video.mp4")
+            shutil.copy(temp_video.name, "../client/src/components/videos/output_video.mp4")
         print("Video file written successfully.")
     except Exception as e:
         print(f"An error occurred: {e}")
 
+
+def delete_media():
+    files = ["output.wav", "output_speed.wav"]
+    for file in files:
+        if os.path.exists(file):
+            os.remove(file)

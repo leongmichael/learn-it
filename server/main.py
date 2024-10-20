@@ -7,7 +7,7 @@ import time
 
 from gemini import enter_prompt
 from tts import tts
-from videoediting import speed_up_audio, output_video
+from videoediting import speed_up_audio, output_video, delete_media
 
 app = FastAPI()
 
@@ -167,5 +167,6 @@ def read_prompt(prompt: str):
     speed = speed_up_audio()
     time.sleep(0.5)
     output_video(speed)
+    delete_media()
     
     return {"prompt": prompt}
