@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
-// import { ArrowForward } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 export default function Home() {
   let navigate = useNavigate(); // Navigate to different pages
@@ -134,7 +134,7 @@ export default function Home() {
           }}
           onClick={handleSubmit}
         >
-          {/* <ArrowForward color="white" size={24} /> */}
+          <ArrowUp color="white" size={24} />
         </IconButton>
       </Box>
     </Box>
