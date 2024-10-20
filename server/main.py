@@ -1,6 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import subprocess
 import re
 
 from gemini import enter_prompt
@@ -140,7 +141,29 @@ Let me know if the timing is closer to 28 seconds this time!
         print("script not found")
 
 
-    tts(script)
+    # text to speech
+    # tts(script)
+
+    # # write generated code to python file
+    # with open('videogen.py', 'w') as file:
+    #     file.write(code)
+
+    # run terminal script to generate manim video
+    try:
+        command = "manim videogen.py GeneratedScene -ql"
+        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Get the output and error (if any)
+        output = result.stdout.decode()
+        error = result.stderr.decode()
+
+        print("Output:\n", output)
+        if error:
+            print("Error:\n", error)
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred: {e}")
+
+    
+    
 
 
     return {"prompt": prompt}
