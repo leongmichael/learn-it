@@ -6,7 +6,7 @@ import re
 
 from gemini import enter_prompt
 from tts import tts
-
+from videoediting import speed_up_audio, output_video
 
 app = FastAPI()
 
@@ -163,5 +163,7 @@ I've made the script more concise and focused on the visual elements in the anim
         print(f"An error occurred: {e}")
 
     
+    speed = speed_up_audio()
+    output_video(speed)
     
     return {"prompt": prompt}
