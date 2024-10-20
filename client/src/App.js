@@ -38,7 +38,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <AppBar />
+        {/* <AppBar /> */}
         <Suspense>
           <Routes>
             <Route path="/" element={<Home />} />
