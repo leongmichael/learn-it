@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home.js";
 import NotFound from "./pages/NotFound.js";
-import AppBar from "./components/SiteAppBar.js";
 
 const theme = createTheme({
   typography: {
