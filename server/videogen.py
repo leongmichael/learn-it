@@ -3,9 +3,9 @@ from manim import *
 class GeneratedScene(Scene):
     def construct(self):
         # Title
-        title = Text("Parabolas:  A Journey into Curves").scale(1.2)
+        title = Text("Parabolas: A Curve of Elegance and Function").scale(1.2)
         self.play(Write(title))
-        self.wait(3)
+        self.wait(1)
         self.play(FadeOut(title))
 
         # Axes

@@ -247,6 +247,18 @@ chat_session = model.start_chat(
         "```json\n{\n\"script\": \"A parabola.  It's a U-shaped curve.  Here's a parabola on a graph, represented by the equation y equals x squared.  \n\nNotice the special point called the focus, inside the curve.  And here's the directrix, a line outside the curve.  \n\nEvery point on the parabola is the same distance from the focus as it is from the directrix.  Look at this line, from the focus to a point on the parabola, and then down to the directrix.  They form a right angle.\n\nParabolas are useful for focusing energy.  Think about satellite dishes.  They're shaped like parabolas, with the focus at the center. Signals from all directions are reflected towards the focus.\n\nThat's a quick look at parabolas!  They're a lot more fascinating than they seem at first.\",\n\"code\": \"from manim import *\n\nclass GeneratedScene(Scene):\n    def construct(self):\n        # Title\n        title = Text(\"Parabolas:  A Journey into Curves\").scale(1.2)\n        self.play(Write(title))\n        self.wait(3)\n        self.play(FadeOut(title))\n\n        # Axes\n        axes = Axes(\n            x_range=[-5, 5, 1],\n            y_range=[-2, 10, 2],\n            x_length=10,\n            y_length=8,\n            axis_config={\"include_numbers\": True, \"label_direction\": UP},\n        )\n        axes.add_coordinates()\n        self.play(Create(axes))\n        self.wait(2)\n\n        # Parabola\n        parabola = axes.plot(lambda x: x**2, x_range=[-3, 3], color=BLUE)\n        parabola_label = MathTex(r'y = x^2').next_to(parabola, UP, buff=0.5)\n        self.play(Create(parabola))\n        self.play(Write(parabola_label))\n        self.wait(2)\n\n        # Focus and directrix\n        focus = Dot(color=RED).move_to(axes.coords_to_point(0, 1, 0))\n        focus_label = MathTex(r'Focus').next_to(focus, RIGHT)\n        directrix = Line(start=axes.coords_to_point(-5, -1, 0), end=axes.coords_to_point(5, -1, 0)).set_color(YELLOW)\n        directrix_label = MathTex(r'Directrix').next_to(directrix, DOWN)\n        self.play(Create(focus))\n        self.play(Write(focus_label))\n        self.wait(2)\n        self.play(Create(directrix))\n        self.play(Write(directrix_label))\n        self.wait(2)\n\n        # Show right angle\n        point = axes.coords_to_point(2, 4, 0)\n        line_to_focus = Line(point, focus).set_color(GREEN)\n        line_to_directrix = Line(point, [point[0], -1, 0]).set_color(GREEN)\n        right_angle = RightAngle(line_to_focus, line_to_directrix, length=0.2).set_color(GREEN)\n        self.play(Create(line_to_focus))\n        self.play(Create(line_to_directrix))\n        self.play(Create(right_angle))\n        self.wait(2)\n\n        # Fade out elements\n        self.play(FadeOut(right_angle), FadeOut(line_to_focus), FadeOut(line_to_directrix), FadeOut(parabola), FadeOut(parabola_label), FadeOut(focus), FadeOut(focus_label), FadeOut(directrix), FadeOut(directrix_label))\n        self.wait(1)\n\"\n}\n```\n\nI've made the script more concise and focused on the visual elements in the animation. Let me know what you think! \n\n\n",
       ],
     },
+    {
+      "role": "user",
+      "parts": [
+        "in future responses, make it so that the title only plays for 1-2 seconds only",
+      ],
+    },
+    {
+      "role": "model",
+      "parts": [
+        "Okay, I'll make sure the title only appears for 1-2 seconds in future responses.  This should make the videos more dynamic and focus attention on the content itself.\n\nLet me know your next prompt, and I'll create a video script and code for you! 🎬 \n",
+      ],
+    },
   ]
 )
 
@@ -254,3 +266,5 @@ def enter_prompt(prompt):
   response = chat_session.send_message(prompt)
   # print(response.text)
   return response.text
+
+# print(enter_prompt("make me a short video about parabolas"))
