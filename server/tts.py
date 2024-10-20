@@ -38,6 +38,3 @@ def tts(text):
     except Exception as e:
         print(f"Exception: {e}")
 
-
-if __name__ == "__main__":
-    tts()
