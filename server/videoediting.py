@@ -26,7 +26,7 @@ def output_video(audio):
             print("Loading audio...")
             if audio == "speed": # speeded up
                 audio_video = AudioFileClip("output_speed.wav") # moviepy audio format 
-            else: # no speed modification
+            elif audio == "normal": # no speed modification
                 audio_video = AudioFileClip("output.wav") # moviepy audio format 
             
             print("Loading video...")
