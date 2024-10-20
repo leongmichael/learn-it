@@ -3,6 +3,7 @@ from pydub.playback import play
 from moviepy.editor import VideoFileClip, AudioFileClip
 import tempfile
 import os
+import shutil
 
 
 def speed_up_audio():
@@ -40,7 +41,6 @@ def output_video(audio):
             final_video.write_videofile(temp_video.name, codec="libx264", audio_codec="aac", threads=2, fps=30)
 
             # copy temporary file to final output
-            import shutil
             shutil.copy(temp_video.name, "../client/src/components/videos/output_video.mp4")
         print("Video file written successfully.")
     except Exception as e:
@@ -48,7 +48,20 @@ def output_video(audio):
 
 
 def delete_media():
+    # clear audio files
     files = ["output.wav", "output_speed.wav"]
     for file in files:
         if os.path.exists(file):
             os.remove(file)
+    
+    # clear media
+    media_path = "./media/videos/videogen/480p15"
+    if os.path.exists(media_path) and os.path.isdir(media_path):
+        try:
+            shutil.rmtree(media_path)
+        except Exception as e:
+            print(f"Failed to delete {media_path}. Reason: {e}")
+
+    # clear videogen file
+    with open('videogen.py', 'w') as file:
+        file.write("")
