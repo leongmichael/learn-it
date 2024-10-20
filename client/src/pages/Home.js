@@ -14,6 +14,35 @@ export default function Home() {
   let navigate = useNavigate(); // Navigate to different pages
   const theme = useTheme();
 
+  const [prompt, setPrompt] = useState("");
+
+  const handlePromptChange = (event) => {
+    setPrompt(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const apiUrl = `http://127.0.0.1:8000/prompt/${encodeURIComponent(prompt)}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data); // Process the response data as needed
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
+  };
+
+
+
   return (
     <Box
       sx={{
@@ -78,6 +107,7 @@ export default function Home() {
           fullWidth
           placeholder="What do you want to learn about?"
           variant="outlined"
+          onChange={handlePromptChange}
           sx={{
             "& .MuiOutlinedInput-root": {
               borderRadius: "50px",
@@ -101,8 +131,10 @@ export default function Home() {
               backgroundColor: "#5225BC",
             },
           }}
+          onClick={handleSubmit}
         >
           {/* <ArrowForward color="white" size={24} /> */}
+          
         </IconButton>
       </Box>
     </Box>

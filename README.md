@@ -3,4 +3,5 @@
 ## Scripts
 
 ```source env/bin/activaet```\
-```deactivate```
+```deactivate```\
+```fastapi dev main.py```
