@@ -409,7 +409,4 @@ chat_session = model.start_chat(
 
 def enter_prompt(prompt):
   response = chat_session.send_message(prompt)
-  # print(response.text)
   return response.text
-
-# print(enter_prompt("make me a short video about parabolas"))

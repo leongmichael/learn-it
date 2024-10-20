@@ -5,16 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.js";
 import NotFound from "./pages/NotFound.js";
 
-const theme = createTheme({
-  typography: {
-    fontFamily: '"Open Sans", sans-serif',
-    button: {
-      textTransform: "none",
-      fontSize: "medium",
-    },
-  },
-
-});
+const theme = createTheme({});
 
 export default function App() {
   return (

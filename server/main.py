@@ -13,14 +13,14 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=["*"],  # allows all origins
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],  # allows all methods
+    allow_headers=["*"],  # allows all headers
 )
 
 
-# http://127.0.0.1:8000/
+# url: http://127.0.0.1:8000/
 
 @app.get("/")
 def read_root():
