@@ -164,6 +164,7 @@ def read_prompt(prompt: str):
 
     
     speed = speed_up_audio()
+    time.sleep(0.5)
     output_video(speed)
     
     return {"prompt": prompt}
