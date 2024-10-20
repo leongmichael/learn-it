@@ -214,6 +214,9 @@ chat_session = model.start_chat(
   ]
 )
 
-response = chat_session.send_message("INSERT_INPUT_HERE")
 
-print(response.text)
+def enter_prompt(prompt):
+  response = chat_session.send_message(prompt)
+  print(response.text)
+  return response.text
+
