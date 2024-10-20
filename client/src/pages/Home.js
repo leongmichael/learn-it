@@ -27,21 +27,22 @@ export default function Home() {
 
     try {
       const response = await fetch(apiUrl, {
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
       console.log(data); // Process the response data as needed
     } catch (error) {
-      console.error('There has been a problem with your fetch operation:', error);
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     }
   };
-
-
 
   return (
     <Box
@@ -134,7 +135,6 @@ export default function Home() {
           onClick={handleSubmit}
         >
           {/* <ArrowForward color="white" size={24} /> */}
-          
         </IconButton>
       </Box>
     </Box>
