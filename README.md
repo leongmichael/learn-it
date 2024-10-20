@@ -1,7 +1,4 @@
 # LearnIt
-
-## App Info
-
 Learn through generative AI video content. \
 <img src="client/src/components/images/landingpage.png"  width="575" height="500"/>
 
