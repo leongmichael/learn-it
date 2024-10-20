@@ -142,11 +142,11 @@ Let me know if the timing is closer to 28 seconds this time!
 
 
     # text to speech
-    # tts(script)
+    tts(script)
 
-    # # write generated code to python file
-    # with open('videogen.py', 'w') as file:
-    #     file.write(code)
+    # write generated code to python file
+    with open('videogen.py', 'w') as file:
+        file.write(code)
 
     # run terminal script to generate manim video
     try:
@@ -164,6 +164,4 @@ Let me know if the timing is closer to 28 seconds this time!
 
     
     
-
-
     return {"prompt": prompt}
