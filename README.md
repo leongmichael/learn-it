@@ -3,7 +3,7 @@
 ## App Info
 
 Learn through generative AI video content. \
-<img src="client/src/components/images/landingpage.png"  width="550" height="500"/>
+<img src="client/src/components/images/landingpage.png"  width="575" height="500"/>
 
 ## Setup / Installation
 
