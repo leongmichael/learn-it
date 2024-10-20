@@ -139,9 +139,8 @@ Let me know if the timing is closer to 28 seconds this time!
     else:
         print("script not found")
 
-    
-    print(script)
 
+    tts(script)
 
 
     return {"prompt": prompt}

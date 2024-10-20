@@ -28,7 +28,7 @@ def tts(text):
         options = SpeakOptions(
             model="aura-asteria-en",
             encoding="linear16",
-            container="wav"
+            container="wav",
         )
 
         # STEP 3: Call the save method on the speak property
