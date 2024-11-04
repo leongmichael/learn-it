@@ -92,12 +92,12 @@ const VideoPlayer = ({ videoSrc }) => {
   };
 
   const handleDownload = () => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = videoSrc;
-    
-    const filename = videoSrc.split('/').pop() || 'generated_video.mp4';
+
+    const filename = videoSrc.split("/").pop() || "generated_video.mp4";
     link.download = filename;
-    
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -177,14 +177,14 @@ const VideoPlayer = ({ videoSrc }) => {
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <IconButton 
-              onClick={handleDownload} 
-              sx={{ 
+          <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <IconButton
+              onClick={handleDownload}
+              sx={{
                 color: "#7235FF",
-                '&:hover': {
-                  backgroundColor: 'rgba(114, 53, 255, 0.1)'
-                }
+                "&:hover": {
+                  backgroundColor: "rgba(114, 53, 255, 0.1)",
+                },
               }}
               title="Download video"
             >

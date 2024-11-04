@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { ArrowUp } from "lucide-react";
 import VideoPlayer from "../components/VideoPlayer.js";
 import videoSource from "../components/videos/output_video.mp4";
-const electron = window.require('electron');
+const electron = window.require("electron");
 const { ipcRenderer } = electron;
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
-    severity: "success"
+    severity: "success",
   });
   const [showVideo, setShowVideo] = useState(true);
 
@@ -32,49 +32,49 @@ export default function Home() {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     if (!prompt.trim()) {
       setSnackbar({
         open: true,
         message: "Please enter a prompt first",
-        severity: "warning"
+        severity: "warning",
       });
       return;
     }
-    
+
     if (!ipcRenderer) {
       setSnackbar({
         open: true,
         message: "System error: ipcRenderer not available",
-        severity: "error"
+        severity: "error",
       });
       return;
     }
-    
+
     try {
       setIsLoading(true);
       setShowVideo(false);
       console.log("Attempting to invoke run-python");
-      const result = await ipcRenderer.invoke('run-python', prompt);
-      console.log('Python process completed with code:', result);
-      
+      const result = await ipcRenderer.invoke("run-python", prompt);
+      console.log("Python process completed with code:", result);
+
       if (result === 0) {
         setShowVideo(true);
         setSnackbar({
           open: true,
           message: "Video generated successfully!",
-          severity: "success"
+          severity: "success",
         });
       } else {
         setSnackbar({
           open: true,
           message: "Error generating video",
-          severity: "error"
+          severity: "error",
         });
       }
     } catch (error) {
@@ -82,7 +82,7 @@ export default function Home() {
       setSnackbar({
         open: true,
         message: `Error: ${error.message || "Failed to generate video"}`,
-        severity: "error"
+        severity: "error",
       });
     } finally {
       setIsLoading(false);
@@ -185,7 +185,11 @@ export default function Home() {
             disabled={isLoading}
           >
             {isLoading ? (
-              <CircularProgress size={24} color="inherit" sx={{ color: "white" }} />
+              <CircularProgress
+                size={24}
+                color="inherit"
+                sx={{ color: "white" }}
+              />
             ) : (
               <ArrowUp color="white" size={24} />
             )}
@@ -194,18 +198,25 @@ export default function Home() {
       </Box>
 
       {isLoading && (
-        <Box sx={{ width: '100%', maxWidth: '600px', mb: 2 }}>
-          <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 1 }}>
+        <Box sx={{ width: "100%", maxWidth: "600px", mb: 2 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{ mb: 1 }}
+          >
             Generating your video... This may take a few minutes
           </Typography>
-          <LinearProgress sx={{ 
-            height: 8,
-            borderRadius: 4,
-            backgroundColor: '#E0E0E0',
-            '& .MuiLinearProgress-bar': {
-              backgroundColor: '#7235FF',
-            }
-          }} />
+          <LinearProgress
+            sx={{
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: "#E0E0E0",
+              "& .MuiLinearProgress-bar": {
+                backgroundColor: "#7235FF",
+              },
+            }}
+          />
         </Box>
       )}
 
@@ -227,17 +238,17 @@ export default function Home() {
         </Box>
       )}
 
-      <Snackbar 
-        open={snackbar.open} 
-        autoHideDuration={6000} 
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
           {snackbar.message}
         </Alert>

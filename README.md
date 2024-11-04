@@ -18,9 +18,6 @@ deepgram: "KEY"
 
 NOTE: Scripts are directory dependent. Certain scripts will not work in other directories.
 
-### `npm start`
-Runs the frontned client in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser. Make sure to run in the `client` directory.
-
 ### `npm run electron-dev`
 Runs the application frontend client in the development mode. Make sure to run in the `client` directory.
 
@@ -32,9 +29,6 @@ Installs all packages listed in the `package.json` file in the directory you are
 
 Formats all code using Prettier. Make sure to run in the `client` directory to format all JavaScript files. \
 In VS Code, you can install the plugin [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) to format code automatically when saving a file.
-
-### ```fastapi dev main.py```
-Runs the backend server. Open [http://127.0.0.1:8000](http://127.0.0.1:8000) to view it in your browser. Make sure to run in the `server` directory.
 
 ### ```source env/bin/activate```
 Starts Python virtual environment. Make sure to run in the `server` directory. 
