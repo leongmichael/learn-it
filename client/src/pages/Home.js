@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import { ArrowUp } from "lucide-react";
 import VideoPlayer from "../components/VideoPlayer.js";
 import videoSource from "../components/videos/output_video.mp4";
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
 
 export default function Home() {
   let navigate = useNavigate();
@@ -22,24 +24,19 @@ export default function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const apiUrl = `http://127.0.0.1:8000/prompt/${encodeURIComponent(prompt)}`;
-
+    console.log("Submitting prompt:", prompt);
+    
+    if (!ipcRenderer) {
+        console.error("ipcRenderer is not available");
+        return;
+    }
+    
     try {
-      const response = await fetch(apiUrl, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      console.log(data);
+        console.log("Attempting to invoke run-python");
+        const result = await ipcRenderer.invoke('run-python', prompt);
+        console.log('Python process completed with code:', result);
     } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
+        console.error("Error running Python script:", error);
     }
   };
 
