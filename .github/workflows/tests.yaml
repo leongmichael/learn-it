@@ -22,6 +22,7 @@ jobs:
           node-version: 18
           cache: "npm"
       - name: Install Dependencies
+        cache-dependency-path: client/package.json
         run: npm i
       - name: Check Formatting
         run: npm run format-check
