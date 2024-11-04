@@ -1,9 +1,12 @@
 import {
   Box,
   Typography,
-  useTheme,
   TextField,
   IconButton,
+  CircularProgress,
+  Snackbar,
+  Alert,
+  LinearProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
@@ -15,28 +18,71 @@ const { ipcRenderer } = electron;
 
 export default function Home() {
   let navigate = useNavigate();
-  const theme = useTheme();
   const [prompt, setPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success"
+  });
 
   const handlePromptChange = (event) => {
     setPrompt(event.target.value);
   };
 
+  const handleCloseSnackbar = () => {
+    setSnackbar(prev => ({ ...prev, open: false }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitting prompt:", prompt);
+    
+    if (!prompt.trim()) {
+      setSnackbar({
+        open: true,
+        message: "Please enter a prompt first",
+        severity: "warning"
+      });
+      return;
+    }
     
     if (!ipcRenderer) {
-        console.error("ipcRenderer is not available");
-        return;
+      setSnackbar({
+        open: true,
+        message: "System error: ipcRenderer not available",
+        severity: "error"
+      });
+      return;
     }
     
     try {
-        console.log("Attempting to invoke run-python");
-        const result = await ipcRenderer.invoke('run-python', prompt);
-        console.log('Python process completed with code:', result);
+      setIsLoading(true);
+      console.log("Attempting to invoke run-python");
+      const result = await ipcRenderer.invoke('run-python', prompt);
+      console.log('Python process completed with code:', result);
+      
+      if (result === 0) {
+        setSnackbar({
+          open: true,
+          message: "Video generated successfully!",
+          severity: "success"
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: "Error generating video",
+          severity: "error"
+        });
+      }
     } catch (error) {
-        console.error("Error running Python script:", error);
+      console.error("Error running Python script:", error);
+      setSnackbar({
+        open: true,
+        message: `Error: ${error.message || "Failed to generate video"}`,
+        severity: "error"
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -103,7 +149,9 @@ export default function Home() {
             fullWidth
             placeholder="What do you want to learn about?"
             variant="outlined"
+            value={prompt}
             onChange={handlePromptChange}
+            disabled={isLoading}
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "50px",
@@ -126,13 +174,37 @@ export default function Home() {
               "&:hover": {
                 backgroundColor: "#5225BC",
               },
+              "&.Mui-disabled": {
+                backgroundColor: "#9B7ECC",
+              },
             }}
             onClick={handleSubmit}
+            disabled={isLoading}
           >
-            <ArrowUp color="white" size={24} />
+            {isLoading ? (
+              <CircularProgress size={24} color="inherit" sx={{ color: "white" }} />
+            ) : (
+              <ArrowUp color="white" size={24} />
+            )}
           </IconButton>
         </Box>
       </Box>
+
+      {isLoading && (
+        <Box sx={{ width: '100%', maxWidth: '600px', mb: 2 }}>
+          <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 1 }}>
+            Generating your video... This may take a few minutes
+          </Typography>
+          <LinearProgress sx={{ 
+            height: 8,
+            borderRadius: 4,
+            backgroundColor: '#E0E0E0',
+            '& .MuiLinearProgress-bar': {
+              backgroundColor: '#7235FF',
+            }
+          }} />
+        </Box>
+      )}
 
       <Box
         sx={{
@@ -149,6 +221,22 @@ export default function Home() {
       >
         <VideoPlayer videoSrc={videoSource} />
       </Box>
+
+      <Snackbar 
+        open={snackbar.open} 
+        autoHideDuration={6000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseSnackbar} 
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
