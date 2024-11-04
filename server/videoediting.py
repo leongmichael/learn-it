@@ -54,13 +54,20 @@ def delete_media():
         if os.path.exists(file):
             os.remove(file)
     
-    # clear media
-    media_path = "./media/videos/videogen/480p15"
-    if os.path.exists(media_path) and os.path.isdir(media_path):
-        try:
-            shutil.rmtree(media_path)
-        except Exception as e:
-            print(f"Failed to delete {media_path}. Reason: {e}")
+    # clear media folders
+    media_folders = [
+        "./media/videos/videogen/480p15",
+        "./media/Tex",  # Add Tex folder
+        "./media/texts" # Add texts folder
+    ]
+    
+    for folder in media_folders:
+        if os.path.exists(folder) and os.path.isdir(folder):
+            try:
+                shutil.rmtree(folder)
+                print(f"Successfully deleted {folder}")
+            except Exception as e:
+                print(f"Failed to delete {folder}. Reason: {e}")
 
     # clear videogen file
     with open('videogen.py', 'w') as file:

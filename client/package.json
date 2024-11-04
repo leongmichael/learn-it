@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
+    "child_process": "^1.0.2",
     "dayjs": "^1.11.11",
     "deck.gl": "^8.9.30",
     "electron-is-dev": "^3.0.1",

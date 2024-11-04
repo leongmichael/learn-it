@@ -1,45 +1,91 @@
 import {
   Box,
   Typography,
-  useTheme,
   TextField,
   IconButton,
+  CircularProgress,
+  Snackbar,
+  Alert,
+  LinearProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { ArrowUp } from "lucide-react";
 import VideoPlayer from "../components/VideoPlayer.js";
 import videoSource from "../components/videos/output_video.mp4";
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 export default function Home() {
   let navigate = useNavigate();
-  const theme = useTheme();
   const [prompt, setPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+  const [showVideo, setShowVideo] = useState(true);
 
   const handlePromptChange = (event) => {
     setPrompt(event.target.value);
   };
 
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const apiUrl = `http://127.0.0.1:8000/prompt/${encodeURIComponent(prompt)}`;
+
+    if (!prompt.trim()) {
+      setSnackbar({
+        open: true,
+        message: "Please enter a prompt first",
+        severity: "warning",
+      });
+      return;
+    }
+
+    if (!ipcRenderer) {
+      setSnackbar({
+        open: true,
+        message: "System error: ipcRenderer not available",
+        severity: "error",
+      });
+      return;
+    }
 
     try {
-      const response = await fetch(apiUrl, {
-        method: "GET",
-      });
+      setIsLoading(true);
+      setShowVideo(false);
+      console.log("Attempting to invoke run-python");
+      const result = await ipcRenderer.invoke("run-python", prompt);
+      console.log("Python process completed with code:", result);
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      if (result === 0) {
+        setShowVideo(true);
+        setSnackbar({
+          open: true,
+          message: "Video generated successfully!",
+          severity: "success",
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: "Error generating video",
+          severity: "error",
+        });
       }
-
-      const data = await response.json();
-      console.log(data);
     } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
+      console.error("Error running Python script:", error);
+      setSnackbar({
+        open: true,
+        message: `Error: ${error.message || "Failed to generate video"}`,
+        severity: "error",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -106,7 +152,9 @@ export default function Home() {
             fullWidth
             placeholder="What do you want to learn about?"
             variant="outlined"
+            value={prompt}
             onChange={handlePromptChange}
+            disabled={isLoading}
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "50px",
@@ -129,29 +177,82 @@ export default function Home() {
               "&:hover": {
                 backgroundColor: "#5225BC",
               },
+              "&.Mui-disabled": {
+                backgroundColor: "#9B7ECC",
+              },
             }}
             onClick={handleSubmit}
+            disabled={isLoading}
           >
-            <ArrowUp color="white" size={24} />
+            {isLoading ? (
+              <CircularProgress
+                size={24}
+                color="inherit"
+                sx={{ color: "white" }}
+              />
+            ) : (
+              <ArrowUp color="white" size={24} />
+            )}
           </IconButton>
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: "800px",
-          borderRadius: "16px",
-          overflow: "hidden",
-          boxShadow:
-            "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-          backgroundColor: "#000",
-          margin: "0 auto",
-          marginTop: -8,
-        }}
+      {isLoading && (
+        <Box sx={{ width: "100%", maxWidth: "600px", mb: 2 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{ mb: 1 }}
+          >
+            Generating your video... This may take a few minutes
+          </Typography>
+          <LinearProgress
+            sx={{
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: "#E0E0E0",
+              "& .MuiLinearProgress-bar": {
+                backgroundColor: "#7235FF",
+              },
+            }}
+          />
+        </Box>
+      )}
+
+      {showVideo && !isLoading && (
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "800px",
+            borderRadius: "16px",
+            overflow: "hidden",
+            boxShadow:
+              "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+            backgroundColor: "#000",
+            margin: "0 auto",
+            marginTop: -8,
+          }}
+        >
+          <VideoPlayer videoSrc={videoSource} />
+        </Box>
+      )}
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <VideoPlayer videoSrc={videoSource} />
-      </Box>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -1,35 +1,12 @@
-from typing import Union
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-import subprocess
-import re
-import time
-
+import sys
 from gemini import enter_prompt
 from tts import tts
 from videoediting import speed_up_audio, output_video, delete_media
+import re
+import time
+import subprocess
 
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # allows all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # allows all methods
-    allow_headers=["*"],  # allows all headers
-)
-
-
-# url: http://127.0.0.1:8000/
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/prompt/{prompt}")
-def read_prompt(prompt: str):
-    # print(prompt)
+def process_prompt(prompt):
     print("running")
     response = enter_prompt(prompt)
 
@@ -81,3 +58,8 @@ def read_prompt(prompt: str):
     delete_media()
     
     return {"prompt": prompt}
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        prompt = sys.argv[1]
+        process_prompt(prompt)
