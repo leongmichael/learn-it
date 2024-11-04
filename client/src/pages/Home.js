@@ -25,6 +25,7 @@ export default function Home() {
     message: "",
     severity: "success"
   });
+  const [showVideo, setShowVideo] = useState(true);
 
   const handlePromptChange = (event) => {
     setPrompt(event.target.value);
@@ -57,11 +58,13 @@ export default function Home() {
     
     try {
       setIsLoading(true);
+      setShowVideo(false);
       console.log("Attempting to invoke run-python");
       const result = await ipcRenderer.invoke('run-python', prompt);
       console.log('Python process completed with code:', result);
       
       if (result === 0) {
+        setShowVideo(true);
         setSnackbar({
           open: true,
           message: "Video generated successfully!",
@@ -206,21 +209,23 @@ export default function Home() {
         </Box>
       )}
 
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: "800px",
-          borderRadius: "16px",
-          overflow: "hidden",
-          boxShadow:
-            "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-          backgroundColor: "#000",
-          margin: "0 auto",
-          marginTop: -8,
-        }}
-      >
-        <VideoPlayer videoSrc={videoSource} />
-      </Box>
+      {showVideo && !isLoading && (
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "800px",
+            borderRadius: "16px",
+            overflow: "hidden",
+            boxShadow:
+              "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+            backgroundColor: "#000",
+            margin: "0 auto",
+            marginTop: -8,
+          }}
+        >
+          <VideoPlayer videoSrc={videoSource} />
+        </Box>
+      )}
 
       <Snackbar 
         open={snackbar.open} 
