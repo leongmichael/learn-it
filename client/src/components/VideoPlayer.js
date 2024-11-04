@@ -6,6 +6,7 @@ import {
   VolumeX,
   Maximize,
   Minimize,
+  Download,
 } from "lucide-react";
 import {
   Box,
@@ -90,6 +91,18 @@ const VideoPlayer = ({ videoSrc }) => {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = videoSrc;
+    
+    const filename = videoSrc.split('/').pop() || 'generated_video.mp4';
+    link.download = filename;
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Box
       ref={containerRef}
@@ -164,9 +177,23 @@ const VideoPlayer = ({ videoSrc }) => {
               </Select>
             </FormControl>
           </Box>
-          <IconButton onClick={toggleFullscreen} sx={{ color: "#7235FF" }}>
-            {isFullscreen ? <Minimize /> : <Maximize />}
-          </IconButton>
+          <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <IconButton 
+              onClick={handleDownload} 
+              sx={{ 
+                color: "#7235FF",
+                '&:hover': {
+                  backgroundColor: 'rgba(114, 53, 255, 0.1)'
+                }
+              }}
+              title="Download video"
+            >
+              <Download />
+            </IconButton>
+            <IconButton onClick={toggleFullscreen} sx={{ color: "#7235FF" }}>
+              {isFullscreen ? <Minimize /> : <Maximize />}
+            </IconButton>
+          </Box>
         </Box>
       </Box>
     </Box>
