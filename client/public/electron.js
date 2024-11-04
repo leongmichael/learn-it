@@ -16,17 +16,14 @@ const registerIpcHandlers = () => {
 
     return new Promise((resolve, reject) => {
       try {
-        // Go up two directories from public to reach server
-        const scriptPath = path.join(
-          __dirname,
-          "..",
-          "..",
-          "server",
-          "main.py"
-        );
+        // Get the server directory path
+        const serverDir = path.join(__dirname, "..", "..", "server");
+        const scriptPath = path.join(serverDir, "main.py");
         console.log("Executing Python script at:", scriptPath);
 
-        const pythonProcess = spawn("python3", [scriptPath, prompt]);
+        const pythonProcess = spawn("python3", [scriptPath, prompt], {
+          cwd: serverDir  // Set the working directory to the server folder
+        });
 
         pythonProcess.stdout.on("data", (data) => {
           console.log(`Python stdout: ${data}`);
